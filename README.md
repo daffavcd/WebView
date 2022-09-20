@@ -1,16 +1,28 @@
-# jb12
+# Flutter Webview
 
-A new Flutter project.
+## Webview
+<img src="/sss/1.png" title="Screenshot 1"/>
 
-## Getting Started
+## Hybrid Mode
+<img src="/sss/2.png" title="Screenshot 2"/>
 
-This project is a starting point for a Flutter application.
+## AppBar Navigation
+<img src="/sss/3.png" title="Screenshot 3"/>
 
-A few resources to get you started if this is your first Flutter project:
+## Link To External Page
+<img src="/sss/4.png" title="Screenshot 4"/>
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+## Evaluate Javascript
+<img src="/sss/5.png" title="Screenshot 5"/>
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Javascript Channel (Showing IP)
+<img src="/sss/6.png" title="Screenshot 6"/>
+
+## Managing Cookies
+<img src="/sss/7.png" title="Screenshot 7"/>
+
+## Flutter Webview
+
+Flutter webview, javascript, html load.
+
+- https://codelabs.developers.google.com/codelabs/flutter-webview#11
