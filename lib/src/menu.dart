@@ -5,6 +5,7 @@ import 'package:webview_flutter/webview_flutter.dart';
 enum _MenuOptions {
   navigationDelegate,
   userAgent, // Add this line
+  javascriptChannel,
 }
 
 class Menu extends StatefulWidget {
@@ -21,7 +22,7 @@ class _MenuState extends State<Menu> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<WebViewController>(
-      future: widget.controller.future, // Modify
+      future: widget.controller.future,
       builder: (context, controller) {
         return PopupMenuButton<_MenuOptions>(
           onSelected: (value) async {
@@ -29,7 +30,6 @@ class _MenuState extends State<Menu> {
               case _MenuOptions.navigationDelegate:
                 await controller.data!.loadUrl('https://youtube.com');
                 break;
-              // Add from here ...
               case _MenuOptions.userAgent:
                 final userAgent = await controller.data!
                     .runJavascriptReturningResult('navigator.userAgent');
@@ -37,6 +37,22 @@ class _MenuState extends State<Menu> {
                 ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                   content: Text(userAgent),
                 ));
+                break;
+              // Add from here ...
+              case _MenuOptions.javascriptChannel:
+                await controller.data!.runJavascript(
+                    '''
+var req = new XMLHttpRequest();
+req.open('GET', "https://api.ipify.org/?format=json");
+req.onload = function() {
+  if (req.status == 200) {
+    let response = JSON.parse(req.responseText);
+    SnackBar.postMessage("IP Address: " + response.ip);
+  } else {
+    SnackBar.postMessage("Error: " + req.status);
+  }
+}
+req.send();''');
                 break;
               // ... to here.
             }
@@ -46,10 +62,14 @@ class _MenuState extends State<Menu> {
               value: _MenuOptions.navigationDelegate,
               child: Text('Navigate to YouTube'),
             ),
-            // Add from here ...
             const PopupMenuItem<_MenuOptions>(
               value: _MenuOptions.userAgent,
               child: Text('Show user-agent'),
+            ),
+            // Add from here ...
+            const PopupMenuItem<_MenuOptions>(
+              value: _MenuOptions.javascriptChannel,
+              child: Text('Lookup IP Address'),
             ),
             // ... to here.
           ],

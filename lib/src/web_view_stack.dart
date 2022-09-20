@@ -38,7 +38,6 @@ class _WebViewStackState extends State<WebViewStack> {
               loadingPercentage = 100;
             });
           },
-          // Add from here ...
           navigationDelegate: (navigation) {
             final host = Uri.parse(navigation.url).host;
             if (host.contains('youtube.com')) {
@@ -54,6 +53,8 @@ class _WebViewStackState extends State<WebViewStack> {
             return NavigationDecision.navigate;
           },
           javascriptMode: JavascriptMode.unrestricted,
+          javascriptChannels:
+              _createJavascriptChannels(context), // Add this line
         ),
         if (loadingPercentage < 100)
           LinearProgressIndicator(
@@ -62,4 +63,18 @@ class _WebViewStackState extends State<WebViewStack> {
       ],
     );
   }
+
+  // Add from here ...
+  Set<JavascriptChannel> _createJavascriptChannels(BuildContext context) {
+    return {
+      JavascriptChannel(
+        name: 'SnackBar',
+        onMessageReceived: (message) {
+          ScaffoldMessenger.of(context)
+              .showSnackBar(SnackBar(content: Text(message.message)));
+        },
+      ),
+    };
+  }
+  // ... to here.
 }
